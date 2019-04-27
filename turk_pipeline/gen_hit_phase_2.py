@@ -10,10 +10,10 @@ header = '''<!-- Bootstrap v3.0.3 -->
 <div class="panel-body">
 	<p>We are interested in building a social chatbot which has engaging conversations with humans.  Below you will see some fictional conversations.  </p>
 	<p>
-	You will be given a past conversation excerpt (one message from Person 1 and one from Person 2) and three potential chatbot responses. Your task is to evaluate the responses as follows:
+	You will be given a past conversation excerpt (one message from Chatbot and one from Person 1) and three potential chatbot responses. Your task is to evaluate the responses as follows:
 	<ol type="A">
-		<li><b>Most Relevant:</b> Which response from Person 1 is the most relevant to the conversation? (choose one).  If none are relevant, check the box "None are relevant," but still select the response that is the <i>most</i> relevant.</li> 
-		<li><b>Most Interesting:</b> Which response from Person 1 is the most interesting thing to say? (choose one).  If none are interesting, check the box "None are interesting," but still select the response that is the <i>most</i> interesting.</li>
+		<li><b>Most Relevant:</b> Which response from the chatbot is the most relevant to the conversation? (choose one).  If none are relevant, check the box "None are relevant," but still select the response that is the <i>most</i> relevant.</li> 
+		<li><b>Most Interesting:</b> Which response from the chatbot is the most interesting thing to say? (choose one).  If none are interesting, check the box "None are interesting," but still select the response that is the <i>most</i> interesting.</li>
 		<li><b>Best Overall Chatbot Response (Interesting, Relevant, Well-Formed):</b> What is the best thing for the chatbot to say that balances a well-formed response with interestingness and relevance? Rank the three responses 1st (best), 2nd, and 3rd (worst).  
 </p>
 	</ol>
@@ -26,10 +26,10 @@ header = '''<!-- Bootstrap v3.0.3 -->
 	<div class=container style="position:relative;">
 		<div class="column" style="width:100%; float:left; position:relative; ">
 			<p>
-				<b> Person 1:</b> Nice ! How old are your children?
+				<b> Chatbot:</b> Nice ! How old are your children?
 			</p>
 			<p>
-				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b>  I have four that range in age from 10 to 21. 
+				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b>  I have four that range in age from 10 to 21. 
 			</p>
 		</div>
 	</div>
@@ -42,7 +42,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 	     <td><b>Best Overall <br /> (rank all) </b>&nbsp;&nbsp;</td>
        </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> Oh, that's really cool.  I have kids, too. </td>
+	     <td style=""><b>Chatbot's Response:</b> Oh, that's really cool.  I have kids, too. </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input type="radio" checked/></label></div></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input  type="radio" disabled/></label></div></td>
 		 <td><div class="select-inline"><label class="select-inline"><select disabled>
@@ -52,7 +52,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		 </td>	   
 	   </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> I don't know don't know don't know  </td>
+	     <td style=""><b>Chatbot's Response:</b> I don't know don't know don't know  </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input type="radio" value="2" disabled/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input type="radio" value="2" disabled/></label></div><br /><br /></td>
 		 <td><div class="select-inline"><label class="select-inline"><select disabled>
@@ -62,7 +62,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		 </td>	       
 		 </tr>
        <tr style="">
-	     <td style=""><b>Person 1's Response:</b> Wow, fantastic!  My kid loves to play baseball.  Do you like to play baseball? </td>
+	     <td style=""><b>Chatbot's Response:</b> Wow, fantastic!  My kid loves to play baseball.  Do you like to play baseball? </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input  type="radio" value="3" disabled/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input  type="radio" value="3" checked/></label></div><br /><br /></td>
 		 <td><div class="select-inline"><label class="select-inline"><select disabled>
@@ -91,10 +91,10 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float:left; position:relative">
 				<p>
-					<b> Person 1:</b> Nice ! How old are your children?
+					<b> Chatbot:</b> Nice ! How old are your children?
 				</p>
 				<p>
-					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b> I have four that range in age from 10 to 21. 
+					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b> I have four that range in age from 10 to 21. 
 				</p>
 			</div>
 		</div>
@@ -102,12 +102,12 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float:left; position:relative; margin-right: 30px">
 				<p>
-					<b> Person 1:</b>  That's cool.
+					<b> Chatbot:</b>  That's cool.
 				</p>
 			</div>
 		</div>
 	</div>
-	In this example, Person 1's response is very <b>Relevant (5)</b>  and uses correct <b>Grammar (5)</b>  but is not <b>Interesting (1)</b>, as it does not add to the conversation.</p>
+	In this example, Chatbot's response is very <b>Relevant (5)</b>  and uses correct <b>Grammar (5)</b>  but is not <b>Interesting (1)</b>, as it does not add to the conversation.</p>
 	<br/>
 	<br/>
 
@@ -116,22 +116,22 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float:left; position:relative">
 				<p>
-					<b> Person 1:</b>  i have been trying to find new hobbies recently .
+					<b> Chatbot:</b>  i have been trying to find new hobbies recently .
 				</p>
 				<p>
-					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b>  that is cool do you like to cook ?
+					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b>  that is cool do you like to cook ?
 				</p>
 			</div>
 		</div>
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float: left; position:relative; margin-right: 30px">
 				<p>
-					<b> Person 1:</b>   i am doing well do you like music ? i used to play play play in a band myself.
+					<b> Chatbot:</b>   i am doing well do you like music ? i used to play play play in a band myself.
 				</p>
 			</div>
 		</div>
 	</div>
-	Person 1's response is not <b>Relevant (1)</b>  as it does not answer Person 1's question.  It also has a <b>Grammar (3)</b>  error in the second sentence ('play play play'). However, it is a somewhat <b>Interesting (3)</b> statement. </p>
+	Chatbot's response is not <b>Relevant (1)</b>  as it does not answer Chatbot's question.  It also has a <b>Grammar (3)</b>  error in the second sentence ('play play play'). However, it is a somewhat <b>Interesting (3)</b> statement. </p>
 	
 
 
@@ -145,17 +145,17 @@ header = '''<!-- Bootstrap v3.0.3 -->
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float:left; position:relative">
 				<p>
-					<b> Person 1:</b> that sounds dangerous
+					<b> Chatbot:</b> that sounds dangerous
 				</p>
 				<p>
-					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b> well , i use special measures to make sure i'm safe.
+					<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b> well , i use special measures to make sure i'm safe.
 				</p>
 			</div>
 		</div>
 		<div class=container style="position:relative; ">
 			<div class="column" style="width:75%; float: left; margin-right: 30px">
 				<p>
-					<b> Person 1:</b> yeah it s great ! it was nice talking with her kids today ! ever been dancing since even over years ago now over here over 300 pounds does pay bills bills bought
+					<b> Chatbot:</b> yeah it s great ! it was nice talking with her kids today ! ever been dancing since even over years ago now over here over 300 pounds does pay bills bills bought
 				</p>
 			</div>
 		</div>
@@ -169,7 +169,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 <br /> 
 
 </div>
-	&nbsp;&nbsp; Explanation: The <b> most relevant </b> response directly responds to Person 2's statement about children, while the <b> most interesting </b> response is a more interesting response.  The <b>best response</b> is chosen even though it is not the most relevant because it is semi-relevant and is more interesting, contributing meaningfully to the conversation.
+	&nbsp;&nbsp; Explanation: The <b> most relevant </b> response directly responds to Person 1's statement about children, while the <b> most interesting </b> response is a more interesting response.  The <b>best response</b> is chosen even though it is not the most relevant because it is semi-relevant and is more interesting, contributing meaningfully to the conversation.
 <br /><br />
 </section>
 
@@ -178,10 +178,10 @@ header = '''<!-- Bootstrap v3.0.3 -->
 	<div class=container style="position:relative; background-color: #E8E8E8">
 		<div class="column" style="width:75%; float:left; position:relative; ">
 			<p>
-				<b> Person 1:</b>  I like watching football.
+				<b> Chatbot:</b>  I like watching football.
 			</p>
 			<p>
-				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b> Me too!  My favorite team is the Dallas Cowboys!
+				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b> Me too!  My favorite team is the Dallas Cowboys!
 			</p>
 		</div>
 	</div>
@@ -195,7 +195,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 	     <td><b>Best Response <br /> (rank the responses <br /> only assigning one response per value)</b>&nbsp;&nbsp;</td>
        </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> That's cool! </td>
+	     <td style=""><b>Chatbot's Response:</b> That's cool! </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_warmup" type="radio" value="1" required/></label></div></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_warmup" type="radio" value="1" required/></label></div></td>
 		 <td><div class="select-inline"><label class="select-inline"><select name="rank_warmup_1" required>
@@ -207,7 +207,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 			</div>
 		 </td>	   </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> Cool is football </td>
+	     <td style=""><b>Chatbot's Response:</b> Cool is football </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_warmup" type="radio" value="2" required/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_warmup" type="radio" value="2" required/></label></div><br /><br /></td>
 <td><div class="select-inline"><label class="select-inline"><select name="rank_warmup_2" required>
@@ -219,7 +219,7 @@ header = '''<!-- Bootstrap v3.0.3 -->
 			</div>
 		 </td>       </tr>
        <tr style="">
-	     <td style=""><b>Person 1's Response:</b> Yes, I played tennis last week!  It was so much fun. </td>
+	     <td style=""><b>Chatbot's Response:</b> Yes, I played tennis last week!  It was so much fun. </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_warmup" type="radio" value="3" required/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_warmup" type="radio" value="3" required/></label></div><br /><br /></td>
 <td><div class="select-inline"><label class="select-inline"><select name="rank_warmup_3" required>
@@ -261,10 +261,10 @@ pair_temp = '''
 	<div class=container style="position:relative; background-color: #E8E8E8">
 		<div class="column" style="width:75%; float:left; position:relative; ">
 			<p>
-				<b> Person 1:</b>  $M1
+				<b> Chatbot:</b>  $M1
 			</p>
 			<p>
-				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 2:</b>  $M2
+				<b> &nbsp;&nbsp;&nbsp;&nbsp;Person 1:</b>  $M2
 			</p>
 		</div>
 	</div>
@@ -277,7 +277,7 @@ pair_temp = '''
 	     <td><b>Best Response <br /> (rank the responses <br /> only assigning one response per value)</b>&nbsp;&nbsp;</td>
        </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> $M3 </td>
+	     <td style=""><b>Chatbot's Response:</b> $M3 </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_${N}" type="radio" value="1" required/></label></div></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_${N}" type="radio" value="1" required/></label></div></td>
 	     <td><div class="select-inline"><label class="select-inline"><select name="rank_${N}_1" required>
@@ -290,7 +290,7 @@ pair_temp = '''
 		 </td>
 	   </tr>
 	   <tr style="">
-	     <td style=""><b>Person 1's Response:</b> $M4 </td>
+	     <td style=""><b>Chatbot's Response:</b> $M4 </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_${N}" type="radio" value="2" required/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_${N}" type="radio" value="2" required/></label></div><br /><br /></td>
          <td><div class="select-inline"><label class="select-inline"><select name="rank_${N}_2" required>
@@ -303,7 +303,7 @@ pair_temp = '''
 		 </td>
        </tr>
        <tr style="">
-	     <td style=""><b>Person 1's Response:</b> $M5 </td>
+	     <td style=""><b>Chatbot's Response:</b> $M5 </td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_${N}" type="radio" value="3" required/></label></div><br /><br /></td>
 	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_${N}" type="radio" value="3" required/></label></div><br /><br /></td>
          <td><div class="select-inline"><label class="select-inline"><select name="rank_${N}_3" required>
@@ -358,21 +358,21 @@ function checkRanks(){
 		group = div_groups[i];
 		var selects = group.querySelectorAll('select');
 		var values = [];
-	    for(var i=0;i<selects.length;i++){
-	        if(selects[i].value!='null')
-	            values.push(selects[i].value);
+	    for(var j=0;j<selects.length;j++){
+	        if(selects[j].value!='null')
+	            values.push(selects[j].value);
 	    }	    
 		var num_ones = 0;
 	    var num_twos = 0;
 	    var num_threes = 0;
-	    for(var i = 0; i < values.length; i++){
-	    	if (values[i] == "1"){
+	    for(var j = 0; j < values.length; j++){
+	    	if (values[j] == "1"){
 	    		num_ones++;
 	    	}
-	    	else if (values[i] == "2"){
+	    	else if (values[j] == "2"){
 	    		num_twos++;
 	    	}
-	    	else if (values[i] == "3"){
+	    	else if (values[j] == "3"){
 	    		num_threes++;
 	    	}
 	    }

@@ -170,7 +170,7 @@ for file in files:
 				d_counter += 1
 				#if d_counter == NUM_Q:
 				#	break
-			if "elapsed: {'exs':" in line or "label_candidates" in line or "your persona:" in line or ("gold" not in names[count] and "eval_labels" in line) or "eval_labels_choice" in line or "deepmoji_cand" in line or "emotion:" in line or "act_type" in line or "prepend_cand" in line or "deepmoji_ctx" in line:
+			if "[situation" in line or "[topic" in line or "[emotion" in line or "[prepend_ctx" in line or "elapsed: {'exs':" in line or "label_candidates" in line or "your persona:" in line or ("gold" not in names[count] and "eval_labels" in line) or "eval_labels_choice" in line or "deepmoji_cand" in line or "emotion:" in line or "act_type" in line or "prepend_cand" in line or "deepmoji_ctx" in line:
 				continue
 			#if found_new:
 			input.append(line)		
