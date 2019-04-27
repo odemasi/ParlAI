@@ -12,12 +12,12 @@ header = '''<!-- Bootstrap v3.0.3 -->
 	<p>
 	You will be given a past conversation excerpt (one message from Person 1 and one from Person 2) and three potential chatbot responses. Your task is to evaluate the responses as follows:
 	<ol type="A">
-		<li><b>Most Relevant:</b> Which response from Person 1 is the most relevant to the conversation? (choose one).  If none are relevant, select "None are acceptable."</li> 
-		<li><b>Most Interesting:</b> Which response from Person 1 is the most interesting thing to say? (choose one).  If none are interesting, select "None are acceptable."</li>
+		<li><b>Most Relevant:</b> Which response from Person 1 is the most relevant to the conversation? (choose one).  If none are relevant, check the box "None are relevant," but still select the response that is the <i>most</i> relevant.</li> 
+		<li><b>Most Interesting:</b> Which response from Person 1 is the most interesting thing to say? (choose one).  If none are interesting, check the box "None are interesting," but still select the response that is the <i>most</i> interesting.</li>
 		<li><b>Best Overall Chatbot Response (Interesting, Relevant, Well-Formed):</b> What is the best thing for the chatbot to say that balances a well-formed response with interestingness and relevance? Rank the three responses 1st (best), 2nd, and 3rd (worst).  
 </p>
 	</ol>
-	There are $NUM_PAIRS conversations for you to review.</li>
+	There are $NUM_PAIRS conversations for you to review.  Please ignore punctuation and capitalization when making your decisions.</li>
 	</p>
 	<br/>
 	<br/>
@@ -71,9 +71,16 @@ header = '''<!-- Bootstrap v3.0.3 -->
 					</div>
 		 </td>
 		 <tr style="">
-	     <td style=""><b>No responses are acceptable.</b></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input type="radio" value="4" disabled/></label></div><br /><br /></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input type="radio" value="4" disabled/></label></div><br /><br /></td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input type = "checkbox" disabled>None are relevant</label></div></td>
+       </tr>
+       <tr style="">
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input type = "checkbox" disabled>None are interesting</label></div></td>
        </tr>
 	</table>
 
@@ -224,14 +231,21 @@ header = '''<!-- Bootstrap v3.0.3 -->
 			</div>
 		 </td>       </tr>
 		 <tr style="">
-	     <td style=""><b>No responses are acceptable.</b></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_warmup" type="radio" value="4" required/></label></div><br /><br /></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_warmup" type="radio" value="4" required/></label></div><br /><br /></td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input name = "check_rel_warmup" type = "checkbox" >None are relevant</label></div></td>
+       </tr>
+       <tr style="">
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input name = "check_int_warmup" type = "checkbox" >None are interesting</label></div></td>
        </tr>
 	</table>
 	
-	<br /><br />What influenced how you chose either the Most Relevant or Most Interesting response (choose one)? <br />
-	<textarea rows="2" cols="100" style="resize:none" name="Justified Answer"></textarea><br /><br />
+	<br /><br />What influenced how you chose the best response? <br />
+	<textarea rows="2" cols="100" style="resize:none" name="Justified Answer" required></textarea><br /><br />
 </fieldset>
 
 
@@ -243,6 +257,7 @@ pair_temp = '''
 
 
 <fieldset>
+	<div class="rankDivs">
 	<div class=container style="position:relative; background-color: #E8E8E8">
 		<div class="column" style="width:75%; float:left; position:relative; ">
 			<p>
@@ -301,13 +316,20 @@ pair_temp = '''
 		 </td>
        </tr>
        <tr style="">
-	     <td style=""><b>No responses are acceptable.</b></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input name="rel_${N}" type="radio" value="4" required/></label></div><br /><br /></td>
-	     <td><div class="radio-inline"><label class="radio-inline"><input name="int_${N}" type="radio" value="4" required/></label></div><br /><br /></td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input name = "check_rel_${N}" type = "checkbox" >None are relevant</label></div></td>
+       </tr>
+       <tr style="">
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td style="">&nbsp</td>
+	     <td><div class="checkbox-inline"><label class="checkbox-inline"><input name = "check_int_${N}" type = "checkbox" >None are interesting</label></div></td>
        </tr>
 	</table>
 	<br /><br /><br />
-	
+	</div>
 </fieldset>
 
 
@@ -318,37 +340,53 @@ NUM_PAIRS = 10
 
 js = '''
 <script>
-var selects = document.querySelectorAll('select'),
-    notify = document.getElementById('notification');
+//var selects = document.querySelectorAll('select'),
 
-function getOthers(current){
-    var values = [];
-    for(var i=0;i<selects.length;i++){
-        if(selects[i].value!='null' && selects[i]!=current)
-            values.push(selects[i].value);
-    }
-    return values;
-}
-
-function checkUnique(){
+/*function checkUnique(){
     if(this.value && getOthers(this).indexOf(this.value)>-1){
-        notify.innerText = 'You already selected that';
+        notify('You have already selected that value.  Do not rank different responses as the same value.');
         this.value = null;
     }
 }
 
 for(var i=0;i<selects.length;i++)
-    selects[i].onchange = checkUnique;
+    selects[i].onchange = checkUnique();*/
 
-document.getElementById('submit').onclick = function(){
-    var values = getOthers(); // will return all selected values this time
-    if(values.length < 30){
-        notify.innerText = 'Please choose a value for all of the drop-downs.';
-        return false;
-    }
-    notify.innerText = '';
+function checkRanks(){
+	var div_groups = document.querySelectorAll('.rankDivs');
+	for (var i = 0; i < div_groups.length; i++){
+		group = div_groups[i];
+		var selects = group.querySelectorAll('select');
+		var values = [];
+	    for(var i=0;i<selects.length;i++){
+	        if(selects[i].value!='null')
+	            values.push(selects[i].value);
+	    }	    
+		var num_ones = 0;
+	    var num_twos = 0;
+	    var num_threes = 0;
+	    for(var i = 0; i < values.length; i++){
+	    	if (values[i] == "1"){
+	    		num_ones++;
+	    	}
+	    	else if (values[i] == "2"){
+	    		num_twos++;
+	    	}
+	    	else if (values[i] == "3"){
+	    		num_threes++;
+	    	}
+	    }
+	    if(num_ones != 1 || num_twos != 1 || num_threes != 1){
+	        alert('Please choose a value for all of the drop-downs.  Ensure you have ranked one response 1st, one 2nd, and one 3rd for every question.');
+	        return false;
+	    }
+	}
+
+    
     return true;
 }
+
+window.onload = function() {document.getElementById('submitButton').setAttribute('onclick', 'return checkRanks();')};
 </script>
 '''
 
@@ -382,7 +420,7 @@ if __name__ == '__main__':
 
 
 
-		f.write("What influenced how you chose the Best Response for the last question? <br /><textarea rows=\"2\" cols=\"100\" style=\"resize:none\" name=\"Justified Answer Final\"></textarea><br /><br />")
+		f.write("What influenced how you chose the Best Response for the last question? <br /><textarea rows=\"2\" cols=\"100\" style=\"resize:none\" name=\"Justified Answer Final\" required></textarea><br /><br />")
 		f.write("<br /><br /><br /><br /><fieldarea>Tell us any feedback you have on the task (Optional)<br/><textarea name=\"optionalfeedback\" rows=\"2\" cols=\"100\" style=\"resize:none\"></textarea>")
 		f.write('</section>')
 		f.write(js)
