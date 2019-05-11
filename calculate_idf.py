@@ -85,32 +85,135 @@ def get_stats(filename, df_dict, tot_doc, modelname):
         return 0, 0, 0, 0, 0, 0, 0
 
     
-models = ['seq2seq', 'transformer', 'language_model']
-tasks = ['cornell_movie', 'dailydialog', 'empathetic_dialogues', 'personachat']
-
-    
-datasets = ['cornell_movie', 'dailydialog', 'empathetic_dialogues', 'personachat'] 
-  
-modelinfo = [('LanguageModel', 'language_model'), 
-            ('LanguageModelWeighted', 'language_model_idf'), 
-            ('LanguageModelWeighted', 'language_model_swapping'),
-            ('Seq2Seq', 'seq2seq'), 
-            ('Seq2SeqWeighted', 'seq2seq_idf'), 
-            ('Seq2SeqWeighted', 'seq2seq_swapping'), 
-            ('NEWFACE', 'newfaceseq2seq'), 
-            ('TorchAgent', 'transformer'),
-            ('TransformerWeighted', 'transformer_idf'),
-            ('TransformerWeighted', 'transformer_swapping'), 
-            ('NEWFACE', 'newfacetransformer'), 
-            ]
+# models = ['seq2seq', 'transformer', 'language_model']
+# # tasks = ['cornell_movie', 'dailydialog', 'empathetic_dialogues', 'personachat']
+# 
+#     
+# # datasets = ['cornell_movie', 'dailydialog', 'empathetic_dialogues', 'personachat'] 
+# datasets = ['crisischatsmessages', 'crisischatsnot2', ]
+# 
+# 
+# modelinfo = [('LanguageModel', 'language_model'), 
+#             ('LanguageModelWeighted', 'language_model_idf'), 
+#             ('LanguageModelWeighted', 'language_model_swapping'),
+#             ('Seq2Seq', 'seq2seq'), 
+#             ('Seq2SeqWeighted', 'seq2seq_idf'), 
+#             ('Seq2SeqWeighted', 'seq2seq_swapping'), 
+#             ('NEWFACE', 'newfaceseq2seq'), 
+#             ('TorchAgent', 'transformer'),
+#             ('TransformerWeighted', 'transformer_idf'),
+#             ('TransformerWeighted', 'transformer_swapping'), 
+#             ('NEWFACE', 'newfacetransformer'), 
+#             ]
             
 
-stats_format = '%s, %s, %.3f, %.3f, %.3f, %.5f, %.5f, %.5f, %.5f, %s'
+# stats_format = '%s, %s, %.3f, %.3f, %.3f, %.5f, %.5f, %.5f, %.5f, %s'
+
+
+# if __name__ == '__main__': 
+#     result_lines = ['===================================\n',]
+#     for dataset in datasets:
+#         dict_filename = 'tmp/%s/dict_minfreq_2.doc_freq' % dataset
+#         tot_doc_filename = 'tmp/%s/dict_minfreq_2.tot_doc' % dataset
+#         df_dict = load_dict(dict_filename)
+#         
+#         with open(tot_doc_filename, 'r') as f:
+#             tot_doc = float(f.readline())
+#         
+#         for (modelname, modelprefix) in modelinfo: 
+#             print(dataset, modelname, modelprefix)
+#             try: 
+#                 filename = 'tmp/%s/%s_minfreq_2_test.out' % (dataset, modelprefix)
+#             
+#                 outputs = get_stats(filename, df_dict, tot_doc, modelname)
+#                 stats = stats_format % \
+#                             tuple([dataset, modelname] + list(outputs) + [filename,])
+#                 result_lines.append(stats)
+#             
+# #                 if modelname=='NEWFACE': 
+# #                     filename = 'tmp/%s/%s_minfreq_2_greedy_test.out' % (dataset, modelprefix)
+# #                     outputs = get_stats(filename, df_dict, tot_doc, modelname)
+# #                     stats = stats_format % \
+# #                                 tuple([dataset, modelname+'_greedy'] + list(outputs) + [filename,])
+# #                     result_lines.append(stats)
+#             except FileNotFoundError:
+#                 result_lines.append('%s, %s,,,,,,,,' % (dataset, modelprefix))
+#                 
+#                 
+#     print('datasetname, modelname, avg_mean_idf, avg_max_idf, avg_length, distinct-unigram-ratio, distinct-bigram-ratio, unique-response-ratio, unigram-entropy')        
+#     print('\n'.join(result_lines))
+            
+    
+def bold_maxes(result_values, result_lines): 
+    for j in range(1,len(result_values[0])): 
+        i_star = np.argmax([result_values[i][j] for i in range(len(result_values))])
+        result_values[i_star][j] = '\\textbf{%.3f}' % result_values[i_star][j]
+        
+    for i in range(len(result_values)):
+        if i > 0:
+            stats_line = ' & ' + stats_format % tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
+        else:
+            stats_line = stats_format % tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
+        
+        result_lines.append(stats_line)
+    return result_lines
+
+
+
+    
+models = ['seq2seq', ]#'transformer']
+# tasks = ['cornell_movie', 'dailydialog', 'empathetic_dialogues', 'personachat']
+
+    
+datasets = ['personachat', 'dailydialog', 'empathetic_dialogues', 'cornell_movie',  ] 
+# datasets = ['crisischatsmessages', 'crisischatsnot2', ]
+# datasets = ['dailydialog',]
+
+dataset_name = {'personachat':'Persona-Chat', 
+                'dailydialog':'DailyDialog', 
+                'empathetic_dialogues':'Empathetic Dialogues', 
+                'cornell_movie':'Cornell Movie'
+                }
+
+modelinfo = [
+            # ('LanguageModel', 'language_model'), 
+#             ('LanguageModelWeighted', 'language_model_idf'), 
+#             ('LanguageModelWeighted', 'language_model_swapping'),
+            ('Seq2Seq', 'seq2seq', 'standard'), 
+            ('Seq2SeqWeighted', 'seq2seq_swapping', 'idf+swap'), 
+            ('Seq2SeqWeighted', 'seq2seq_idf', 'idf-weights'), 
+            ('NEWFACE', 'newfaceseq2seq', 'face')]
+            
+modelinfo2 = [
+            ('TorchAgent', 'transformer', 'standard'),
+            ('TransformerWeighted', 'transformer_swapping', 'idf+swap'),
+            ('TransformerWeighted', 'transformer_idf', 'idf-weights'), 
+#             ('NEWFACE', 'newfacetransformer'), 
+            ]
+
+
+# stats_format = ' & %s & %.3f & %.3f & %.3f & %.3f & %.3f & %.3f & %.3f \\\\'
+stats_format = ' & %s & %s & %s & %s & %s & %s & %s & %s \\\\'
+
 
 
 if __name__ == '__main__': 
-    result_lines = ['===================================\n',]
+
+    result_lines = ['%===================================\n',]
+    result_lines2 = ['%===================================\n',]
+    
+    result_lines.append('\\multirow{16}{*}{\\STAB{\\rotatebox[origin=c]{90}{Sequence-to-Sequence}}}')
+    result_lines2.append('\\multirow{12}{*}{\\STAB{\\rotatebox[origin=c]{90}{Transformer}}}')
+
     for dataset in datasets:
+        
+        
+        result_lines.append(' & \\multirow{4}{*}{\\parbox{2cm}{\\vspace{.1cm} %s}}' % dataset_name[dataset])
+        result_lines2.append(' & \\multirow{3}{*}{\\parbox{2cm}{\\vspace{.1cm} %s}}' % dataset_name[dataset])
+        
+        result_values = []
+        result_values2 = []
+        
         dict_filename = 'tmp/%s/dict_minfreq_2.doc_freq' % dataset
         tot_doc_filename = 'tmp/%s/dict_minfreq_2.tot_doc' % dataset
         df_dict = load_dict(dict_filename)
@@ -118,15 +221,17 @@ if __name__ == '__main__':
         with open(tot_doc_filename, 'r') as f:
             tot_doc = float(f.readline())
         
-        for (modelname, modelprefix) in modelinfo: 
+        for (modelname, modelprefix, method) in modelinfo: 
             print(dataset, modelname, modelprefix)
             try: 
                 filename = 'tmp/%s/%s_minfreq_2_test.out' % (dataset, modelprefix)
             
                 outputs = get_stats(filename, df_dict, tot_doc, modelname)
-                stats = stats_format % \
-                            tuple([dataset, modelname] + list(outputs) + [filename,])
-                result_lines.append(stats)
+                # stats_line = stats_format % tuple([method,] + list(outputs) )
+                
+#                 result_lines.append(stats_line)
+                result_values.append( [method,] + list(outputs) )
+            
             
 #                 if modelname=='NEWFACE': 
 #                     filename = 'tmp/%s/%s_minfreq_2_greedy_test.out' % (dataset, modelprefix)
@@ -136,12 +241,34 @@ if __name__ == '__main__':
 #                     result_lines.append(stats)
             except FileNotFoundError:
                 result_lines.append('%s, %s,,,,,,,,' % (dataset, modelprefix))
-                
-                
-    print('datasetname, modelname, avg_mean_idf, avg_max_idf, avg_length, distinct-unigram-ratio, distinct-bigram-ratio, unique-response-ratio, unigram-entropy')        
-    print('\n'.join(result_lines))
+        
+        result_lines = bold_maxes(result_values, result_lines)
+        result_lines.append('\\cline{2-10}')
+        
+        
+        for (modelname, modelprefix, method) in modelinfo2: 
+            print(dataset, modelname, modelprefix)
             
-    
+            try: 
+                filename = 'tmp/%s/%s_minfreq_2_test.out' % (dataset, modelprefix)
+            
+                outputs = get_stats(filename, df_dict, tot_doc, modelname)
+                result_values2.append([method,] + list(outputs) )
+#                 stats = stats_format % \
+#                             tuple([method,] + list(outputs) )
+#                 result_lines2.append(stats)
+
+            except FileNotFoundError:
+                result_lines2.append('%s, %s,,,,,,,,' % (dataset, modelprefix))
+        
+        result_lines2 = bold_maxes(result_values2, result_lines2)
+        result_lines2.append('\\cline{2-10}')
+        
+        
+    print('method, avg_mean_idf, avg_max_idf, avg_length, distinct-unigram-ratio, distinct-bigram-ratio, unique-response-ratio, unigram-entropy')        
+    print('\n'.join(result_lines))
+    print('\hline \hline')
+    print('\n'.join(result_lines2))
     
     
         
