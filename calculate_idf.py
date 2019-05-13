@@ -144,16 +144,35 @@ def get_stats(filename, df_dict, tot_doc, modelname):
 #     print('\n'.join(result_lines))
             
     
+def format_sig_figs(vals):
+    formatted_vals = []
+    for i, val in enumerate(vals): 
+        if type(val) == str: 
+            formatted_vals.append(val)
+        elif i in [4, 5]: 
+            formatted_vals.append('%.3f' % val)
+        else: 
+            formatted_vals.append('%.2f' % val)
+            
+    return tuple(formatted_vals)
+#     tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
+
+
+
 def bold_maxes(result_values, result_lines): 
-    for j in range(1,len(result_values[0])): 
+    for j in range(1,len(result_values[0])): # result_values[0] is the method name
         i_star = np.argmax([result_values[i][j] for i in range(len(result_values))])
-        result_values[i_star][j] = '\\textbf{%.3f}' % result_values[i_star][j]
+        if j in [4, 5]:
+            result_values[i_star][j] = '\\textbf{%.3f}' % result_values[i_star][j]
+        else:
+            result_values[i_star][j] = '\\textbf{%.2f}' % result_values[i_star][j]
         
     for i in range(len(result_values)):
         if i > 0:
-            stats_line = ' & ' + stats_format % tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
+            stats_line = ' & ' + stats_format % format_sig_figs(result_values[i])
         else:
-            stats_line = stats_format % tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
+            stats_line = stats_format % format_sig_figs(result_values[i])
+            #tuple([x if type(x) == str else '%.3f'%x for x in result_values[i]])
         
         result_lines.append(stats_line)
     return result_lines
@@ -179,15 +198,15 @@ modelinfo = [
             # ('LanguageModel', 'language_model'), 
 #             ('LanguageModelWeighted', 'language_model_idf'), 
 #             ('LanguageModelWeighted', 'language_model_swapping'),
-            ('Seq2Seq', 'seq2seq', 'standard'), 
+            ('Seq2Seq', 'seq2seq', 'unweighted'), 
             ('Seq2SeqWeighted', 'seq2seq_swapping', 'idf+swap'), 
-            ('Seq2SeqWeighted', 'seq2seq_idf', 'idf-weights'), 
-            ('NEWFACE', 'newfaceseq2seq', 'face')]
+            ('Seq2SeqWeighted', 'seq2seq_idf', 'idf'), 
+            ('NEWFACE', 'newfaceseq2seq', 'FACE')]
             
 modelinfo2 = [
-            ('TorchAgent', 'transformer', 'standard'),
+            ('TorchAgent', 'transformer', 'unweighted'),
             ('TransformerWeighted', 'transformer_swapping', 'idf+swap'),
-            ('TransformerWeighted', 'transformer_idf', 'idf-weights'), 
+            ('TransformerWeighted', 'transformer_idf', 'idf'), 
 #             ('NEWFACE', 'newfacetransformer'), 
             ]
 
