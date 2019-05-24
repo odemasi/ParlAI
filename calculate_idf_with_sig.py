@@ -59,7 +59,7 @@ def get_stats_sig(response_test, response_null):
     
     trials = 1000
     N = len(response_test)
-    n = int(np.floor(.30*N))
+    n = int(np.floor(.50*N))
     
     vals_test = np.NaN * np.zeros((trials, 4))
     vals_null = np.NaN * np.zeros((trials, 4))
@@ -312,7 +312,7 @@ if __name__ == '__main__':
         
         
         model_responses_tfm = {'unweighted': [], 'idf': [], 'FACE': []}
-        for (modelname, modelprefix, method) in modelinfo: 
+        for (modelname, modelprefix, method) in modelinfo2: 
             print(dataset, modelname, modelprefix)
             filename = 'tmp/%s/%s_minfreq_2_test.out' % (dataset, modelprefix)
             
